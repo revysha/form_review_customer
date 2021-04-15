@@ -1,14 +1,17 @@
-# Version
+# Version -> Cek versi berdasarkan versi docker engine
 version: '3.1'
 
 # Setup
-services:
+services: #
     
     # PHP
     php:
+        #image: php:8.0-apache -> untuk menentukan versi image yang akan dipakai
+        build: 
+            context: ./development
+            dockerfile: Dockerfile
         depends_on:
             - db
-        image: docker-php-dev
         restart: always
         ports:
             - "5000:80"
@@ -28,17 +31,17 @@ services:
 
     # MySQL
     db:
-        image: mysql:5.7
+        image: mysql:latest
         restart: always
         volumes:
-            - wordpress_db:/var/lib/mysql
+            - review_cust_db:/var/lib/mysql
         environment:
             MYSQL_DATABASE: review_cust
             MYSQL_PASSWORD: password
             MYSQL_ROOT_PASSWORD: password
         ports:
             - "5080:3306"
-    # Volumes
+#Volumes
 volumes:
-    wordpress_db:
-    wordpress_uploads:
+    review_cust_db:
+    review_cust_uploads:
